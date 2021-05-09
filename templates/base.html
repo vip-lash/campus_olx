@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,14 +7,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="Description" content="Enter your description here" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{% static 'css/all.css' %}">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <!-- Custom -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <!-- Lightbox -->
+    <link href="{% static 'css/lightbox.min.css' %}" rel="stylesheet">
     <title>C_olx</title>
 </head>
 
 <body>
-    {% block content %} 
+    <!-- Top Bar -->
+{% include 'partials/_topbar.html' %}
+     <!-- Navbar -->
+{% include 'partials/_navbar.html' %}
+    
+    {% block content %} {% endblock %}
 
-     
-    {% endblock %}
+    <!-- Footer -->
+    {% include 'partials/_footer.html' %}
+    <script src="{% static 'js/jquery-3.3.1.min.js'%} "></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js'%} "></script>
+    <script src="{% static 'js/lightbox.min.js'%}"></script>
+    <script src="{% static 'js/main.js'%} "></script>
 </body>
 
 </html>
