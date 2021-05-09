@@ -149,3 +149,5 @@ Thumbs.db
 .prof
 
 venv
+/static
+/media
