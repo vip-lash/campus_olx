@@ -1,11 +1,13 @@
 .btn-secondary {
   color: #fff !important; }
 
+
+
 img {
   width: 100%; }
 
 .logo {
-  width: 80px; }
+  width: 40px; }
 
 .navbar {
   opacity: 0.9;
@@ -68,6 +70,7 @@ img {
 
 .listing-preview a {
   position: relative; }
+
 
 @media (max-width: 991px) {
   #showcase {

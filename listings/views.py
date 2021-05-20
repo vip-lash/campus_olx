@@ -1,8 +1,12 @@
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render,redirect
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
-from .choices import price_choices, bedroom_choices, state_choices
-
+from .choices import price_choices
 from .models import Listing
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+
+
 
 
 def index(request):
@@ -38,24 +42,6 @@ def search(request):
     if keywords:
       queryset_list = queryset_list.filter(description__icontains=keywords)
 
-  # City
-  if 'city' in request.GET:
-    city = request.GET['city']
-    if city:
-      queryset_list = queryset_list.filter(city__iexact=city)
-
-  # State
-  if 'state' in request.GET:
-    state = request.GET['state']
-    if state:
-      queryset_list = queryset_list.filter(state__iexact=state)
-
-  # Bedrooms
-  if 'bedrooms' in request.GET:
-    bedrooms = request.GET['bedrooms']
-    if bedrooms:
-      queryset_list = queryset_list.filter(bedrooms__lte=bedrooms)
-
   # Price
   if 'price' in request.GET:
     price = request.GET['price']
@@ -63,11 +49,39 @@ def search(request):
       queryset_list = queryset_list.filter(price__lte=price)
 
   context = {
-      'state_choices': state_choices,
-      'bedroom_choices': bedroom_choices,
       'price_choices': price_choices,
       'listings': queryset_list,
       'values': request.GET
   }
 
   return render(request, 'listings/search.html', context)
+
+@login_required(login_url='login')
+def sell_items(request):
+  if request.method == 'POST':
+    title = request.POST['title']
+    price = request.POST['price']
+    description = request.POST['description']
+    photo_main=request.FILES['photo_main']
+    print(photo_main.name)
+    photo_1 = request.FILES.get('photo_1',False)
+    photo_2 = request.FILES.get('photo_2', False)
+    photo_3 = request.FILES.get('photo_3', False)
+    user_id = request.user.id
+    seller=request.POST['seller']
+    phone = request.POST.get('phone',False)
+
+
+    listing = Listing(title=title, price=price,
+                      description=description, photo_main=photo_main, photo_1=photo_1,
+                      photo_2=photo_2, photo_3=photo_3, user_id=user_id, seller=seller, phone=phone)
+    listing.save()
+    messages.success(request, 'Your item is now listed')
+
+  return render(request, 'listings/sell.html')
+
+
+
+
+ 
+ 

@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+
+{% block title %} | Sell {% endblock %}
+
+{% block content %}
+<section id="showcase-inner" class="py-5 text-white">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-md-12">
+                <h1 class="display-4">SELL ITEMS</h1>
+                <p class="lead">Manage your BT Real Estate account</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Breadcrumb -->
+<section id="bc" class="mt-3">
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{% url 'index' %}">
+                        <i class="fas fa-home"></i> Home</a>
+                </li>
+                <li class="breadcrumb-item active"> Sell</li>
+            </ol>
+        </nav>
+    </div>
+</section>
+
+<!-- Alerts -->
+{% include 'partials/_alerts.html' %}
+
+<section class="user-page submit-property section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="submit-form">
+                    <form action="#" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        
+                        <h3 class="heading text-center">Basic Information</h3>
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Item name*</label>
+                                    <input type="text" name="title" class="form-control"
+                                        placeholder="Property Title">
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3 col-md-6">
+                                <div class="form-group">
+                                    <label>Price*</label>
+                                    <input type="number" name="price" class="form-control" placeholder="INR">
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label>Description*</label>
+                                    <textarea class="form-control" rows="5" name="description" required></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <h3 class="heading pb-2">Item Gallery</h3>
+                        <div class="row mb-3 ">
+                            <div class="col-12"><label class="form-label" for="customFile">Main Photo*</label>
+                                <input type="file" class="form-control" id="customFile" name="photo_main" required/>
+                            </div>
+                             <div class="col-4"><label class="form-label" for="customFile">Upload More(Optional)</label>
+                                 <input type="file" class="form-control" id="customFile" name="photo_1" alt="0" />
+                             </div>
+                              <div class="col-4"><label class="form-label" for="customFile" >Upload
+                                      More(Optional)</label>
+                                  <input type="file" class="form-control" id="customFile" name="photo_2" alt="0" />
+                              </div>
+                               <div class="col-4"><label class="form-label" for="customFile">Upload
+                                       More(Optional)</label>
+                                   <input type="file" class="form-control" id="customFile" name="photo_3" alt="0" />
+                               </div>
+                        </div>
+
+                        <h3 class="heading">Contact Details</h3>
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6">
+                                <div class="form-group">
+                                    <label>Name*</label>
+                                    <input type="text" name="seller" class="form-control" placeholder="Name" required>
+                                </div>
+                            </div>
+                          
+                            <div class="col-lg-6 col-md-6">
+                                <div class="form-group">
+                                    <label>Phone*</label>
+                                    <input type="tel" name="phone" class="form-control" placeholder="Phone" required>
+                                </div>
+                            </div>
+
+
+                            <div class="col-lg-12 text-center">
+                                <div class="send-btn">
+                                    <button type="submit" value="sell_items" class="btn btn-common btn-success">Send Changes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<br>
+{% endblock %}

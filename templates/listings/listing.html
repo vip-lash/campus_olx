@@ -10,8 +10,7 @@
         <div class="row text-center">
             <div class="col-md-12">
                 <h1 class="display-4">{{ listing.title }}</h1>
-                <p class="lead">
-                    <i class="fas fa-map-marker"></i> {{ listing.city }} {{ listing.state }}, {{ listing.zipcode }}</p>
+
             </div>
         </div>
     </div>
@@ -68,27 +67,7 @@
                         </a>
                     </div>
                     {% endif %}
-                    {% if listing.photo_4 %}
-                    <div class="col-md-2">
-                        <a href="{{ listing.photo_4.url }}" data-lightbox="home-images">
-                            <img src="{{ listing.photo_4.url }}" alt="" class="img-fluid">
-                        </a>
-                    </div>
-                    {% endif %}
-                    {% if listing.photo_5 %}
-                    <div class="col-md-2">
-                        <a href="{{ listing.photo_5.url }}" data-lightbox="home-images">
-                            <img src="{{ listing.photo_5.url }}" alt="" class="img-fluid">
-                        </a>
-                    </div>
-                    {% endif %}
-                    {% if listing.photo_6 %}
-                    <div class="col-md-2">
-                        <a href="{{ listing.photo_6.url }}" data-lightbox="home-images">
-                            <img src="{{ listing.photo_6.url }}" alt="" class="img-fluid">
-                        </a>
-                    </div>
-                    {% endif %}
+
                 </div>
                 <!-- Fields -->
                 <div class="row mb-5 fields">
@@ -96,52 +75,38 @@
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item text-secondary">
                                 <i class="fas fa-money-bill-alt"></i> Asking Price:
-                                <span class="float-right">${{ listing.price | intcomma }}</span>
-                            </li>
-                            <li class="list-group-item text-secondary">
-                                <i class="fas fa-bed"></i> Bedrooms:
-                                <span class="float-right">{{ listing.bedrooms }}</span>
-                            </li>
-                            <li class="list-group-item text-secondary">
-                                <i class="fas fa-bath"></i> Bathrooms:
-                                <span class="float-right">{{ listing.bathrooms }}</span>
-                            </li>
-                            <li class="list-group-item text-secondary">
-                                <i class="fas fa-car"></i> Garage:
-                                <span class="float-right">{{ listing.garage }}
-                                </span>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="col-md-6">
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item text-secondary">
-                                <i class="fas fa-th-large"></i> Square Feet:
-                                <span class="float-right">{{ listing.sqft }}</span>
-                            </li>
-                            <li class="list-group-item text-secondary">
-                                <i class="fas fa-square"></i> Lot Size:
-                                <span class="float-right">{{ listing.lot_size }} Acres
-                                </span>
+                                <span class="float-right">₹{{ listing.price | intcomma }}</span>
                             </li>
                             <li class="list-group-item text-secondary">
                                 <i class="fas fa-calendar"></i> Listing Date:
                                 <span class="float-right">{{ listing.list_date }}</span>
                             </li>
                             <li class="list-group-item text-secondary">
-                                <i class="fas fa-bed"></i> Realtor:
-                                <span class="float-right">{{ listing.realtor }}
+                                <i class="fas fa-bed"></i> Owner:
+                                <span class="float-right">{{ listing.user.first_name }}
                                 </span>
+                            </li>
+
+
+
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <ul class="list-group list-group-flush">
+
+                            <li class="list-group-item text-secondary">
+
                             </li>
 
 
                         </ul>
                     </div>
                 </div>
-
                 <!-- Description -->
                 <div class="row mb-5">
                     <div class="col-md-12">
+                        <h4 class="desc">Description</h4>
+
                         {{ listing.description }}
                     </div>
                 </div>
@@ -150,12 +115,28 @@
                 <div class="card mb-3">
                     <img class="card-img-top" src="{{ listing.realtor.photo.url }}" alt="">
                     <div class="card-body">
-                        <h5 class="card-title">Property Realtor</h5>
-                        <h6 class="text-secondary">{{ listing.realtor }}</h6>
+                        <h5 class="card-title">Property Owner</h5>
+                        <h6 class="text-secondary">Name :{{ listing.user.first_name }} {{ listing.user.last_name }}</h6>
+                        <h6 class="text-secondary">Username : {{ listing.user.username }}</h6>
+                    {% if user.is_authenticated %}
+                        <h6 class="text-secondary">Phone : {{ listing.phone }}</h6>
+                        <h6 class="text-secondary">Email: {{ listing.user.email }}</h6>
+                         {% else %}
+                         <h6 class="text-secondary">Phone : ********</h6>
+                         <h6 class="text-secondary">Email:  *********</h6>
+                         <a href="{% url 'login' %}">Show Number</a>
+
+                    {% endif %}
+
                     </div>
                 </div>
+                {% if user.is_authenticated %}
                 <button class="btn-primary btn-block btn-lg" data-toggle="modal" data-target="#inquiryModal">Make An
                     Inquiry</button>
+                    {% else %}
+                    <a href="{% url 'login' %}" class="btn-primary btn-block btn-lg text-center" role="button">Make An
+                        Inquiry</a>
+                     {% endif %}
             </div>
         </div>
     </div>
@@ -182,7 +163,7 @@
                     <input type="hidden" name="realtor_email" value="{{ listing.realtor.email }}">
                     <input type="hidden" name="listing_id" value="{{ listing.id }}">
                     <div class="form-group">
-                        <label for="property_name" class="col-form-label">Property:</label>
+                        <label for="property_name" class="col-form-label">Item:</label>
                         <input type="text" name="listing" class="form-control" value="{{ listing.title }}">
                     </div>
                     <div class="form-group">

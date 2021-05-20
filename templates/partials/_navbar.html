@@ -22,15 +22,29 @@
                       {% endif %}>
                      <a class="nav-link" href="{% url 'listings' %}">Featured Listings</a>
                  </li>
+                 <li {% if 'sell' in request.path %} class="nav-item active mr-3" {% else %} class="nav-item mr-3"
+                     {% endif %}>
+                     <a class="nav-link" href="{% url 'sell_items' %}">Sell</a>
+                 </li>
              </ul>
 
              <ul class="navbar-nav ml-auto">
                  {% if user.is_authenticated %}
                  <li {% if 'dashboard' in request.path %} class="nav-item active mr-3" {% else %} class="nav-item mr-3"
                      {% endif %}>
-                     <a class="nav-link" href="{% url 'dashboard' %}">
-                         Welcome {{ user.username }} (Dashboard)</a>
+                     <div class="dropdown">
+                         <a class="nav-link dropdown-toggle" type="button" id="dropdownMenuButton"
+                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                             Dashboard</a>
+                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                             <a class="dropdown-item" href="{% url 'dashboard' %}">Inquiries</a>
+                             <a class="dropdown-item" href="{% url 'my_listings' %}">My Listings</a>
+                         </div>
+                     </div>
+                     
+                    
                  </li>
+                  
                  <li class="nav-item mr-3">
                      <a href="javascript:{document.getElementById('logout').submit()}" class="nav-link">
                          <i class="fas fa-sign-out-alt"></i> Logout

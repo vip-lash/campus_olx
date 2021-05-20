@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class RealtorsConfig(AppConfig):
+class TeamMembersConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'realtors'
+    name = 'team_members'

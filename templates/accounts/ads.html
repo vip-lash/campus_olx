@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
 
-{% block title %} | User Inquiries {% endblock %}
+{% block title %} | User Ads {% endblock %}
 
 {% block content %}
 <section id="showcase-inner" class="py-5 text-white">
     <div class="container">
         <div class="row text-center">
             <div class="col-md-12">
-                <h1 class="display-4">User Dashboard</h1>
-                <p class="lead">Manage your Inquiries</p>
+                <h1 class="display-4">My Listings</h1>
+                <p class="lead">Manage your Listings</p>
             </div>
         </div>
     </div>
@@ -23,7 +23,7 @@
                     <a href="{% url 'index' %}">
                         <i class="fas fa-home"></i> Home</a>
                 </li>
-                <li class="breadcrumb-item active">Inquiries</li>
+                <li class="breadcrumb-item active">Your Listings</li>
             </ol>
         </nav>
     </div>
@@ -37,8 +37,8 @@
         <div class="row">
             <div class="col-md-12">
                 <h2>Welcome {{ user.first_name }}</h2>
-                {% if contacts %}
-                <p>Here are the item listings that you have inquired about</p>
+                {% if listings %}
+                <p>Here are the item listings that you have posted.</p>
                 <table class="table">
                     <thead>
                         <tr>
@@ -48,24 +48,25 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for contact in contacts %}
+                     {% for listing in listings %}
+                       
                         <tr>
-                            <td>{{ contact.id }}</td>
-                            <td>{{ contact.listing }}</td>
+                            <td>{{ listing.id }}</td>
+                            <td>{{ listing.title }}</td>
                             <td>
-                                <a class="btn btn-light" href="{% url 'listing' contact.listing_id %}">View Listing</a>
+                                <a class="btn btn-light" href="{% url 'listing' listing.id %}">View Listing</a>
                             </td>
                             <td>
-
-                                <a class="btn btn-danger" type="submit" name="delete_inquiry"
-                                    href="{% url 'delete_inquiry' contact.id %}">DeleteInquiry</a>
+                                <a class="btn btn-danger" type="submit" name="delete_listing"
+                                    href="{% url 'delete_listing' listing.id %}">Delete Listing</a>
                             </td>
                         </tr>
-                        {% endfor %}
+                       
+                     {% endfor %}
                     </tbody>
                 </table>
                 {% else %}
-                <p>You have not made any inquiries</p>
+                <p>You have not posted any ads</p>
                 {% endif %}
             </div>
         </div>

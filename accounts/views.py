@@ -1,7 +1,13 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render
+
+# Create your views here.
+from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib import messages, auth
 from django.contrib.auth.models import User
 from contacts.models import Contact
+from listings.models import Listing
+from django.contrib.auth.decorators import login_required
+
 
 
 def register(request):
@@ -67,6 +73,7 @@ def logout(request):
     return redirect('index')
 
 
+@login_required(login_url='login')
 def dashboard(request):
   user_contacts = Contact.objects.order_by(
       '-contact_date').filter(user_id=request.user.id)
@@ -75,3 +82,28 @@ def dashboard(request):
       'contacts': user_contacts
   }
   return render(request, 'accounts/dashboard.html', context)
+
+
+@login_required(login_url='login')
+def delete_inquiry(request, id):
+  item_query = Contact.objects.get(pk=id)
+  item_query.delete()
+  return redirect('dashboard')
+
+
+@login_required(login_url='login')
+def my_listings(request):
+  user_listings = Listing.objects.order_by(
+      '-list_date').filter(user_id=request.user.id)
+  
+  context = {
+      'listings': user_listings
+  }
+  return render(request, 'accounts/ads.html', context)
+
+
+@login_required(login_url='login')
+def delete_listing(request, id):
+  item_query = Listing.objects.get(pk=id)
+  item_query.delete()
+  return redirect('my_listings')

@@ -35,7 +35,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'pages.apps.PagesConfig',
     'listings.apps.ListingsConfig',
-    'realtors.apps.RealtorsConfig',
+    'team_members.apps.TeamMembersConfig',
     'accounts.apps.AccountsConfig',
     'contacts.apps.ContactsConfig',
     'django.contrib.admin',
@@ -77,6 +77,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'C_OLX.wsgi.application'
 
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True 
+SESSION_SAVE_EVERY_REQUEST = True
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
