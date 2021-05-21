@@ -184,6 +184,11 @@
                         <label for="message" class="col-form-label">Message:</label>
                         <textarea name="message" class="form-control"></textarea>
                     </div>
+                    <div class="form-group">
+                        <label for="name" class="col-form-label">Sending to:</label>
+                        <input type="text" name="username" class="form-control " {% if user.is_authenticated %}
+                            value="{{ listing.user.username }}" {% endif %} required disabled>
+                    </div>
                     <hr>
                     <input type="submit" value="Send" class="btn btn-block btn-secondary">
                 </form>

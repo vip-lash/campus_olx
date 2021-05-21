@@ -85,6 +85,18 @@ def dashboard(request):
 
 
 @login_required(login_url='login')
+def inquiries(request):
+  
+  user_contacts = Contact.objects.order_by(
+      '-contact_date')
+
+  context = {
+      'contacts': user_contacts
+  }
+  return render(request, 'accounts/inquiries.html', context)
+
+
+@login_required(login_url='login')
 def delete_inquiry(request, id):
   item_query = Contact.objects.get(pk=id)
   item_query.delete()

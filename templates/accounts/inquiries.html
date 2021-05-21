@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %} | User Inquiries {% endblock %}
+{% block title %} |Inquiries for me {% endblock %}
 
 {% block content %}
 <section id="showcase-inner" class="py-5 text-white">
@@ -8,7 +8,7 @@
         <div class="row text-center">
             <div class="col-md-12">
                 <h1 class="display-4">User Dashboard</h1>
-                <p class="lead">Manage your Inquiries</p>
+                <p class="lead">See inquiries made for your listings.</p>
             </div>
         </div>
     </div>
@@ -23,7 +23,7 @@
                     <a href="{% url 'index' %}">
                         <i class="fas fa-home"></i> Home</a>
                 </li>
-                <li class="breadcrumb-item active">My Inquiries</li>
+                <li class="breadcrumb-item active">Inquiries for me</li>
             </ol>
         </nav>
     </div>
@@ -37,36 +37,54 @@
         <div class="row">
             <div class="col-md-12">
                 <h2>Welcome {{ user.first_name }}</h2>
-                {% if contacts %}
-                <p>Here are the item listings that you have inquired about</p>
+                {% if contacts  %}
+                
+
+                <p>Here are the contacts of inquiries for your listing .</p>
                 <table class="table">
                     <thead>
                         <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Item</th>
+                            <th scope="col">NAME</th>
+                            <th scope="col">EMAIL</th>
+                            <th scope="col">PHONE</th>
+                            <th scope="col">VIEW</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
+                        
                         {% for contact in contacts %}
+                        {% ifequal user.username contact.username %}
+                       
                         <tr>
-                            <td>{{ contact.id }}</td>
-                            <td>{{ contact.listing }}</td>
+                            <td>{{ contact.name }}</td>
+                            <td>{{ contact.email }}</td>
+                            <td>{{ contact.phone }}</td>
+                            
                             <td>
                                 <a class="btn btn-light" href="{% url 'listing' contact.listing_id %}">View Listing</a>
                             </td>
-                            <td>
-
-                                <a class="btn btn-danger" type="submit" name="delete_inquiry"
-                                    href="{% url 'delete_inquiry' contact.id %}">Delete Inquiry</a>
-                            </td>
                         </tr>
+                        <tr>
+                            <th scope="row">Message:</th>
+                           <td>{{ contact.message }}
+                           </td>
+                        </tr>
+                        {% else %}
+                        <p></p>
+                      
+                         {% endifequal %}
+                          
+
                         {% endfor %}
+                         
                     </tbody>
                 </table>
                 {% else %}
-                <p>You have not made any inquiries</p>
+                <p>No inquiries have been made for your listings.</p>
+                
                 {% endif %}
+
             </div>
         </div>
     </div>

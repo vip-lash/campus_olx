@@ -15,7 +15,7 @@ def contact(request):
     phone = request.POST['phone']
     message = request.POST['message']
     user_id = request.POST['user_id']
-    realtor_email = request.POST['realtor_email']
+    username = request.POST['username']
 
     #  Check if user has made inquiry already
     if request.user.is_authenticated:
@@ -28,7 +28,7 @@ def contact(request):
         return redirect('/listings/'+listing_id)
 
     contact = Contact(listing=listing, listing_id=listing_id, name=name,
-                      email=email, phone=phone, message=message, user_id=user_id)
+                      email=email, phone=phone, message=message, user_id=user_id, username=username)
 
     contact.save()
 
