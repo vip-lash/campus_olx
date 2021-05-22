@@ -15,7 +15,7 @@ def contact(request):
     phone = request.POST['phone']
     message = request.POST['message']
     user_id = request.POST['user_id']
-    username = request.POST.get('username',False)
+    username = request.POST.get('username')
 
     #  Check if user has made inquiry already
     if request.user.is_authenticated:
